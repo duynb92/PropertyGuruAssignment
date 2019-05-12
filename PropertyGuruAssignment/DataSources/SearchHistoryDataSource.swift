@@ -28,14 +28,27 @@ class SearchHistoryDataSource: NSObject, UICollectionViewDataSource {
 
     }
     
+    
+    /// Get search histories in reversed
+    ///
+    /// - Returns: list of search strings
     func getReversedSearchHistory() -> [String] {
         return self.searchHistoryManager.getSearchHistories().reversed()
     }
     
+    
+    /// Append search string to history
+    ///
+    /// - Parameter searchString: search string to be appended
     func appendSearchHistory(_ searchString: String) {
         return self.searchHistoryManager.appendSearchHistory(searchString)
     }
     
+    
+    /// Get search string at specific index
+    ///
+    /// - Parameter index: index of search string to get
+    /// - Returns: search string if index is valid
     func getSearchHistory(at index: Int) -> String {
         return getReversedSearchHistory()[index]
     }

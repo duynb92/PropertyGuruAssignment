@@ -17,6 +17,10 @@ class ArticleDataSource: NSObject, UICollectionViewDataSource {
         self.articleManager = ArticleManager.shared
     }
     
+    init(_ articleManager: ArticleManager) {
+        self.articleManager = articleManager
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let articleManager = self.articleManager {
             return articleManager.articles.count
@@ -35,17 +39,11 @@ class ArticleDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func getArticlesCount() -> Int {
-        if let articleManager = self.articleManager {
-            return articleManager.articles.count
-        }
-        return 0
+        return self.articleManager.articles.count
     }
     
     func getArticle(at indexPath: IndexPath) -> Article? {
-        if let articleManager = self.articleManager {
-            return articleManager.getArticle(at: indexPath.row)
-        }
-        return nil
+        return self.articleManager.getArticle(at: indexPath.row)
     }
     
     func clearArticles() {

@@ -18,6 +18,7 @@
 		2623BCDF2288811800C16F67 /* SearchHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCDE2288811800C16F67 /* SearchHistoryCollectionViewCell.swift */; };
 		2623BCE222888E9D00C16F67 /* ArticleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE122888E9D00C16F67 /* ArticleDataSource.swift */; };
 		2623BCE422889EC800C16F67 /* SearchHistoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE322889EC800C16F67 /* SearchHistoryDataSource.swift */; };
+		2623BCE82288A23500C16F67 /* ArticleDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE72288A23500C16F67 /* ArticleDataSourceTests.swift */; };
 		2658C20D22871BF500C30B0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C20C22871BF500C30B0E /* AppDelegate.swift */; };
 		2658C21222871BF500C30B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2658C21022871BF500C30B0E /* Main.storyboard */; };
 		2658C21422871BF800C30B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2658C21322871BF800C30B0E /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		2623BCDE2288811800C16F67 /* SearchHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2623BCE122888E9D00C16F67 /* ArticleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataSource.swift; sourceTree = "<group>"; };
 		2623BCE322889EC800C16F67 /* SearchHistoryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryDataSource.swift; sourceTree = "<group>"; };
+		2623BCE72288A23500C16F67 /* ArticleDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataSourceTests.swift; sourceTree = "<group>"; };
 		2658C20922871BF500C30B0E /* PropertyGuruAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PropertyGuruAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2658C20C22871BF500C30B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2658C21122871BF500C30B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				2658C24722875A0500C30B0E /* UrlBuilderTests.swift */,
 				2623BCCE2288136600C16F67 /* SearchHistoryManagerTests.swift */,
 				2623BCDA22886E6A00C16F67 /* ArticleTests.swift */,
+				2623BCE72288A23500C16F67 /* ArticleDataSourceTests.swift */,
 			);
 			path = PropertyGuruAssignmentTests;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				2623BCCF2288136600C16F67 /* SearchHistoryManagerTests.swift in Sources */,
 				2658C23B22874B8F00C30B0E /* ArticleManagerTests.swift in Sources */,
 				2658C24822875A0500C30B0E /* UrlBuilderTests.swift in Sources */,
+				2623BCE82288A23500C16F67 /* ArticleDataSourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

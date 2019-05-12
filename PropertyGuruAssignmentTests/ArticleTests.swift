@@ -50,24 +50,6 @@ class ArticleTests: XCTestCase {
         XCTAssertTrue(imageUrl.isEmpty)
     }
     
-    func test_getImageUrl_withMultimediaContainsThumbLarge_shouldReturnEmpty() {
-        //given
-        var multimedias = [
-            ArticleMultimedia(type: "image", subType: "thumbLarge1", url: "url", width: 200, height: 200),
-            ArticleMultimedia(type: "image", subType: "thumbLarge2", url: "url", width: 200, height: 200),
-            ArticleMultimedia(type: "image", subType: "thumbLarge", url: "urlOfImage", width: 200, height: 200)
-        ]
-        var article = Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: multimedias, webUrl: "webUrl")
-        
-        //when
-        let imageUrl = article.getImageUrl()
-        
-        //then
-        XCTAssertNotNil(imageUrl)
-        XCTAssertFalse(imageUrl.isEmpty)
-        XCTAssertTrue(imageUrl == "urlOfImage")
-    }
-    
     func test_getImageUrl_withThumbLargeAndTypeNotImage_shouldReturnEmpty() {
         //given
         var multimedias = [
@@ -100,6 +82,6 @@ class ArticleTests: XCTestCase {
         //then
         XCTAssertNotNil(imageUrl)
         XCTAssertFalse(imageUrl.isEmpty)
-        XCTAssertTrue(imageUrl == "urlOfImage")
+        XCTAssertTrue(imageUrl.contains("urlOfImage"))
     }
 }

@@ -28,12 +28,6 @@ class ArticleManager {
     
     var articles: [Article] = []
     
-    
-    /// Clear all articles
-    func clearArticles() {
-        self.articles = []
-    }
-    
     /// Get NYT Articles with Query and Page
     ///
     /// - Parameters:
@@ -80,5 +74,21 @@ class ArticleManager {
         
         task.resume()
     }
+    
+    
+    /// Get article at index
+    ///
+    /// - Parameter index: index of article to get
+    /// - Returns: If index is valid, return Article, otherwise nil
+    func getArticle(at index: Int) -> Article? {
+        if (index >= 0) && (index < articles.count) {
+            return articles[index]
+        }
+        return nil
+    }
 
+    /// Clear all articles
+    func clearArticles() {
+        self.articles = []
+    }
 }

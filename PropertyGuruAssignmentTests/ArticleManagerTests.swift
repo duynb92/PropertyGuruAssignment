@@ -171,4 +171,66 @@ class ArticleManagerTests: XCTestCase {
         XCTAssertNil(articles)
         XCTAssertNotNil(apiError)
     }
+    
+    func test_clearArticles_shouldReturnEmpty() {
+        //given
+        articleManager.articles = [
+        Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        ]
+        
+        //when
+        articleManager.clearArticles()
+        
+        //then
+        let articles = articleManager.articles
+        XCTAssertNotNil(articles)
+        XCTAssertTrue(articles.count == 0)
+    }
+    
+    func test_getArticle_withValidIndex_shouldReturnArticle() {
+        //given
+        articleManager.articles = [
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        ]
+        
+        //when
+        let article = articleManager.getArticle(at: 0)
+        
+        //then
+        XCTAssertNotNil(article)
+    }
+    
+    func test_getArticle_withInvalidIndex_shouldReturnArticle() {
+        //given
+        articleManager.articles = [
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        ]
+        
+        //when
+        let article = articleManager.getArticle(at: 5)
+        
+        //then
+        XCTAssertNil(article)
+    }
+    
+    func test_getArticle_withNegativeIndex_shouldReturnArticle() {
+        //given
+        articleManager.articles = [
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+            Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
+        ]
+        
+        //when
+        let article = articleManager.getArticle(at: -2)
+        
+        //then
+        XCTAssertNil(article)
+    }
 }

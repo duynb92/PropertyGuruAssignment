@@ -12,17 +12,28 @@ class ArticlesViewController: UIViewController {
     @IBOutlet weak var colArticles: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var loadingIndicator: CustomActivityIndicatorView!
+    @IBOutlet weak var colSearchHistories: UICollectionView!
     
     var articleManager: ArticleManager!
+    var searchHistoryManager: SearchHistoryManager!
     var query: String? = nil
     var page: Int = 0
     let maximumItemsInPage = 10
+    
+    var isSearching: Bool = false {
+        didSet {
+            colArticles.isHidden = isSearching
+            colSearchHistories.isHidden = !isSearching
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         colArticles.delegate = self
         colArticles.dataSource = self
+        colSearchHistories.delegate = self
+        colSearchHistories.dataSource = self
         searchBar.delegate = self
         
         articleManager = ArticleManager.shared
@@ -31,6 +42,8 @@ class ArticlesViewController: UIViewController {
             self?.toogleLoadingIndicator()
             self?.getArticlesCompletion(result)
         }
+        
+        searchHistoryManager = SearchHistoryManager()
     }
     
 
@@ -67,42 +80,90 @@ class ArticlesViewController: UIViewController {
             print(error)
         }
     }
+    
+    func doSearchArticle(_ query: String) {
+        if (query.isEmpty || query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
+            self.query = nil
+        } else {
+            self.query = query
+        }
+        self.page = 0
+        
+        self.searchBar.text = self.query
+        
+        //Add search string to history
+        searchHistoryManager.appendSearchHistory(query)
+        
+        //Clear current articles
+        articleManager.clearArticles()
+        colArticles.reloadData()
+        
+        //Get articles with query
+        toogleLoadingIndicator()
+        articleManager.getArticles(query: self.query, page: self.page) { [weak self] (result) in
+            self?.toogleLoadingIndicator()
+            self?.getArticlesCompletion(result)
+        }
+    }
+    
+    func stopSearching() {
+        isSearching = false
+        self.view.endEditing(true)
+    }
 }
 
 
 extension ArticlesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let articleManager = self.articleManager {
-            return articleManager.articles.count
+        if collectionView == colArticles {
+            if let articleManager = self.articleManager {
+                return articleManager.articles.count
+            }
+            return 0
+        } else {
+            return searchHistoryManager.getSearchHistories().count
         }
-        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  "ArticleCollectionViewCell", for: indexPath) as! ArticleCollectionViewCell
-        cell.setupCell(self.articleManager.articles[indexPath.row])
-        return cell
+        if collectionView == colArticles {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  "ArticleCollectionViewCell", for: indexPath) as! ArticleCollectionViewCell
+            cell.setupCell(self.articleManager.articles[indexPath.row])
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  "SearchHistoryCollectionViewCell", for: indexPath) as! SearchHistoryCollectionViewCell
+            cell.setupCell(searchHistoryManager.getSearchHistories().reversed()[indexPath.row])
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "ShowArticleDetails", sender: nil)
+        if collectionView == colArticles {
+            self.performSegue(withIdentifier: "ShowArticleDetails", sender: nil)
+        } else {
+            stopSearching()
+            doSearchArticle(searchHistoryManager.getSearchHistories().reversed()[indexPath.row])
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: 200)
+        let height: CGFloat = collectionView == colArticles ? 200.0 : 50.0
+        return CGSize(width: UIScreen.main.bounds.size.width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == self.articleManager.articles.count - 2 {
-            //Check if still have articles to get
-            if (self.articleManager.articles.count < (self.page + 1) * maximumItemsInPage) {
-                return
-            }
-            self.page = self.articleManager.articles.count / maximumItemsInPage
-            toogleLoadingIndicator()
-            articleManager.getArticles(query: self.query, page: self.page) { [weak self] (result) in
-                self?.toogleLoadingIndicator()
-                self?.getArticlesCompletion(result)
+        if collectionView == colArticles {
+            if indexPath.row == self.articleManager.articles.count - 2 {
+                //Check if still have articles to get
+                if (self.articleManager.articles.count < (self.page + 1) * maximumItemsInPage) {
+                    return
+                }
+                self.page = self.articleManager.articles.count / maximumItemsInPage
+                toogleLoadingIndicator()
+                articleManager.getArticles(query: self.query, page: self.page) { [weak self] (result) in
+                    self?.toogleLoadingIndicator()
+                    self?.getArticlesCompletion(result)
+                }
             }
         }
     }
@@ -110,18 +171,23 @@ extension ArticlesViewController: UICollectionViewDelegate, UICollectionViewData
 
 extension ArticlesViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
+        stopSearching()
+        if let searchText = searchBar.text {
+            doSearchArticle(searchText)
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
+        stopSearching()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
+        stopSearching()
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        isSearching = true
+        self.colSearchHistories.reloadData()
         return true
     }
 }

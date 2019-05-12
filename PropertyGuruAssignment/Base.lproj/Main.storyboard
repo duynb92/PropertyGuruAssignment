@@ -55,7 +55,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kmm-cc-zp8" customClass="CustomImageView" customModule="PropertyGuruAssignment" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kmm-cc-zp8" customClass="CustomImageView" customModule="PropertyGuruAssignment" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="20" width="120" height="120"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -120,6 +120,67 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CU8-K2-82X">
+                                <rect key="frame" x="0.0" y="120" width="375" height="275"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="275" id="PsY-Zm-eyF"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zNI-2E-0U5">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchHistoryCollectionViewCell" id="01j-kd-PwS" customClass="SearchHistoryCollectionViewCell" customModule="PropertyGuruAssignment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbP-sd-E16">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="history" translatesAutoresizingMaskIntoConstraints="NO" id="EQf-oY-X1M">
+                                                            <rect key="frame" x="20" y="12.5" width="25" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="25" id="1Xz-HZ-xwR"/>
+                                                                <constraint firstAttribute="width" secondItem="EQf-oY-X1M" secondAttribute="height" multiplier="1:1" id="LZF-T8-8xx"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7g-86-pkN">
+                                                            <rect key="frame" x="65" y="15.5" width="290" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="EQf-oY-X1M" firstAttribute="leading" secondItem="AbP-sd-E16" secondAttribute="leading" constant="20" id="507-mt-S7o"/>
+                                                        <constraint firstAttribute="trailing" secondItem="u7g-86-pkN" secondAttribute="trailing" constant="20" id="98G-wd-y6p"/>
+                                                        <constraint firstItem="u7g-86-pkN" firstAttribute="centerY" secondItem="EQf-oY-X1M" secondAttribute="centerY" id="LTB-7i-dMy"/>
+                                                        <constraint firstItem="u7g-86-pkN" firstAttribute="leading" secondItem="EQf-oY-X1M" secondAttribute="trailing" constant="20" id="SIr-Nb-Yc3"/>
+                                                        <constraint firstItem="EQf-oY-X1M" firstAttribute="centerY" secondItem="AbP-sd-E16" secondAttribute="centerY" id="yq9-6j-J37"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="AbP-sd-E16" firstAttribute="top" secondItem="01j-kd-PwS" secondAttribute="top" id="PKm-2S-UJV"/>
+                                            <constraint firstAttribute="trailing" secondItem="AbP-sd-E16" secondAttribute="trailing" id="gkV-jE-gpt"/>
+                                            <constraint firstAttribute="bottom" secondItem="AbP-sd-E16" secondAttribute="bottom" id="mT5-Pk-hyP"/>
+                                            <constraint firstItem="AbP-sd-E16" firstAttribute="leading" secondItem="01j-kd-PwS" secondAttribute="leading" id="qha-dX-WL6"/>
+                                        </constraints>
+                                        <size key="customSize" width="375" height="50"/>
+                                        <connections>
+                                            <outlet property="lbHistory" destination="u7g-86-pkN" id="czn-ZV-oCM"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="rPo-IJ-d2m" customClass="CustomActivityIndicatorView" customModule="PropertyGuruAssignment" customModuleProvider="target">
                                 <rect key="frame" x="162.5" y="340.5" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -134,19 +195,23 @@
                             <constraint firstItem="d6U-fb-Ows" firstAttribute="top" secondItem="vR1-or-GHg" secondAttribute="bottom" id="43Z-6T-ort"/>
                             <constraint firstItem="vR1-or-GHg" firstAttribute="top" secondItem="psh-IN-TQY" secondAttribute="top" id="8JB-DO-P4L"/>
                             <constraint firstItem="vR1-or-GHg" firstAttribute="leading" secondItem="psh-IN-TQY" secondAttribute="leading" id="FQ9-3k-lzp"/>
+                            <constraint firstItem="CU8-K2-82X" firstAttribute="top" secondItem="d6U-fb-Ows" secondAttribute="top" id="MFX-Ag-mL8"/>
                             <constraint firstItem="psh-IN-TQY" firstAttribute="bottom" secondItem="d6U-fb-Ows" secondAttribute="bottom" id="VqL-qh-Tz9"/>
                             <constraint firstItem="psh-IN-TQY" firstAttribute="trailing" secondItem="vR1-or-GHg" secondAttribute="trailing" id="XgM-C0-Ad6"/>
                             <constraint firstItem="rPo-IJ-d2m" firstAttribute="centerX" secondItem="psh-IN-TQY" secondAttribute="centerX" id="YpW-qt-FjM"/>
                             <constraint firstItem="d6U-fb-Ows" firstAttribute="leading" secondItem="psh-IN-TQY" secondAttribute="leading" id="cwW-t7-JYG"/>
                             <constraint firstItem="psh-IN-TQY" firstAttribute="trailing" secondItem="d6U-fb-Ows" secondAttribute="trailing" id="dNv-zq-LV9"/>
+                            <constraint firstItem="CU8-K2-82X" firstAttribute="leading" secondItem="d6U-fb-Ows" secondAttribute="leading" id="tEy-oi-RMb"/>
                             <constraint firstItem="rPo-IJ-d2m" firstAttribute="width" secondItem="rPo-IJ-d2m" secondAttribute="height" multiplier="1:1" id="vwk-uw-K8c"/>
                             <constraint firstItem="rPo-IJ-d2m" firstAttribute="centerY" secondItem="psh-IN-TQY" secondAttribute="centerY" id="xkj-iO-638"/>
+                            <constraint firstItem="CU8-K2-82X" firstAttribute="trailing" secondItem="d6U-fb-Ows" secondAttribute="trailing" id="zn3-NC-9aE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="psh-IN-TQY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Articles" id="n4O-9V-vaN"/>
                     <connections>
                         <outlet property="colArticles" destination="d6U-fb-Ows" id="RjU-fU-zTs"/>
+                        <outlet property="colSearchHistories" destination="CU8-K2-82X" id="chy-RU-M3p"/>
                         <outlet property="loadingIndicator" destination="rPo-IJ-d2m" id="xss-FP-nPp"/>
                         <outlet property="searchBar" destination="vR1-or-GHg" id="f6A-ok-Moo"/>
                         <outlet property="searchDisplayController" destination="rJ3-Pd-SPV" id="Fdp-9w-3An"/>
@@ -211,4 +276,7 @@
             <point key="canvasLocation" x="305" y="-402"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="history" width="384" height="384"/>
+    </resources>
 </document>

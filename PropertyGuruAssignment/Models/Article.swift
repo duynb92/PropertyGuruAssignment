@@ -69,7 +69,7 @@ class Article: Decodable {
         if thumbs.count == 0 {
             return ""
         } else {
-            return thumbs[0].url
+            return Constants.NYT_ROOT_URL + thumbs[0].url
         }
     }
 }

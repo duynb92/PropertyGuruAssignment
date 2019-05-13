@@ -24,6 +24,11 @@ class SearchHistoryDataProvider: NSObject, UICollectionViewDataSource, UICollect
         super.init()
     }
     
+    init(_ searchHistoryManager: SearchHistoryManager) {
+        self.searchHistoryManager = searchHistoryManager
+        super.init()
+    }
+    
     //MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let searchString = getSearchHistory(at:indexPath.row)

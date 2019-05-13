@@ -1,5 +1,5 @@
 //
-//  ArticleDataSourceTests.swift
+//  articleDataProviderTests.swift
 //  PropertyGuruAssignmentTests
 //
 //  Created by Duy Nguyen on 5/13/19.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import PropertyGuruAssignment
 
-class ArticleDataSourceTests: XCTestCase {
+class ArticleDataProviderTests: XCTestCase {
 
     class MockArticleManager : ArticleManager {
         override func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void) {
@@ -21,28 +21,28 @@ class ArticleDataSourceTests: XCTestCase {
         }
     }
     
-    var articleDataSource: ArticleDataSource!
+    var articleDataProvider: ArticleDataProvider!
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        articleDataSource = ArticleDataSource(MockArticleManager())
+        articleDataProvider = ArticleDataProvider(MockArticleManager())
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        articleDataSource = nil
+        articleDataProvider = nil
         super.tearDown()
     }
     
     func test_getArticle_withValidIndex_shouldReturnArticle() {
         //given
-        articleDataSource.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
             
         }
         
         //when
-        let article = articleDataSource.getArticle(at: IndexPath(row:0,section:0))
+        let article = articleDataProvider.getArticle(at: IndexPath(row:0,section:0))
         
         //then
         XCTAssertNotNil(article)
@@ -50,12 +50,12 @@ class ArticleDataSourceTests: XCTestCase {
     
     func test_getArticle_withInvalidIndex_shouldReturnNil() {
         //given
-        articleDataSource.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
             
         }
         
         //when
-        let article = articleDataSource.getArticle(at: IndexPath(row:-2,section:0))
+        let article = articleDataProvider.getArticle(at: IndexPath(row:-2,section:0))
         
         //then
         XCTAssertNil(article)
@@ -63,15 +63,15 @@ class ArticleDataSourceTests: XCTestCase {
     
     func test_clearArticles_shouldReturnEmpty() {
         //given
-        articleDataSource.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
             
         }
         
         //when
-        articleDataSource.clearArticles()
+        articleDataProvider.clearArticles()
         
         //then
-        let articleCount = articleDataSource.getArticlesCount()
+        let articleCount = articleDataProvider.getArticlesCount()
         XCTAssertTrue(articleCount == 0)
     }
 }

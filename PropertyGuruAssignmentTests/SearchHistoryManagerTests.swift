@@ -73,7 +73,7 @@ class SearchHistoryManagerTests: XCTestCase {
         
         //when
         for i in 0...numberToAdd {
-            let searchString = "seachString\(i)"
+            let searchString = "searchString\(i)"
             searchHistoryManager.appendSearchHistory(searchString)
         }
         
@@ -110,7 +110,7 @@ class SearchHistoryManagerTests: XCTestCase {
         
         //when
         for i in 1...numberToAdd {
-            let searchString = "seachString\(i)"
+            let searchString = "searchString\(i)"
             searchHistoryManager.appendSearchHistory(searchString)
         }
         
@@ -120,4 +120,32 @@ class SearchHistoryManagerTests: XCTestCase {
         XCTAssertTrue(searchHistories.count == numberToAdd)
     }
 
+    func test_getReversedSearchHistories__withEmptySearchHistories_shouldReturnEmpty() {
+        //given
+        
+        //when
+        let reversedSearchHistories = searchHistoryManager.getReversedSearchHistory()
+        
+        //then
+        XCTAssertNotNil(reversedSearchHistories)
+        XCTAssertTrue(reversedSearchHistories.count == 0)
+    }
+    
+    func test_getReversedSearchHistories__withSearchHistories_shouldReturnInReversed() {
+        //given
+        let numberToAdd = 5
+        
+        //when
+        for i in 1...numberToAdd {
+            let searchString = "searchString\(i)"
+            searchHistoryManager.appendSearchHistory(searchString)
+        }
+        
+        //then
+        let reversedSearchHistories = searchHistoryManager.getReversedSearchHistory()
+        XCTAssertNotNil(reversedSearchHistories)
+        XCTAssertTrue(reversedSearchHistories.count > 0)
+        XCTAssertTrue(reversedSearchHistories.first == "searchString\(numberToAdd)")
+        XCTAssertTrue(reversedSearchHistories.last == "searchString1")
+    }
 }

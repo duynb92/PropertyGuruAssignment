@@ -9,6 +9,8 @@
 import Foundation
 
 class SearchHistoryManager {
+    static let shared = SearchHistoryManager()
+    
     var searchHistoryKey = "SEARCH_HISTORY_KEY"
     let maximumSearchCount = 10
     private var searchHistories: [String] = []
@@ -54,5 +56,12 @@ class SearchHistoryManager {
     func clearSearchHistories() {
         UserDefaults.standard.set(nil, forKey: searchHistoryKey)
         UserDefaults.standard.synchronize()
+    }
+    
+    /// Get search histories in reversed
+    ///
+    /// - Returns: list of search strings
+    func getReversedSearchHistory() -> [String] {
+        return getSearchHistories().reversed()
     }
 }

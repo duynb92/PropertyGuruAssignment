@@ -49,7 +49,7 @@ class ArticleDetailsViewController: UIViewController {
     
     /// Handle swipe gesture
     ///
-    /// - Parameter gestureRecognizer: Gesture that user has interacted
+    /// - Parameter gestureRecognizer: Gesture that user has interacted with
     @objc func handleSwipeGesture(gestureRecognizer: UISwipeGestureRecognizer) {
         if let currentArticleIndex = self.articleManager.articles.firstIndex(where: { $0.id == article?.id }) {
             let swipeLeftCondition = gestureRecognizer.direction == .left && currentArticleIndex < self.articleManager.articles.count - 1

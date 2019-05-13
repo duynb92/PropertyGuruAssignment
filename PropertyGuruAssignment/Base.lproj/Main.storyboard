@@ -181,6 +181,14 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2h-Rz-Tz9">
+                                <rect key="frame" x="86" y="363.5" width="203.5" height="60"/>
+                                <string key="text">Oops!
+No articles found :(</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="rPo-IJ-d2m" customClass="CustomActivityIndicatorView" customModule="PropertyGuruAssignment" customModuleProvider="target">
                                 <rect key="frame" x="162.5" y="340.5" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -199,6 +207,8 @@
                             <constraint firstItem="psh-IN-TQY" firstAttribute="bottom" secondItem="d6U-fb-Ows" secondAttribute="bottom" id="VqL-qh-Tz9"/>
                             <constraint firstItem="psh-IN-TQY" firstAttribute="trailing" secondItem="vR1-or-GHg" secondAttribute="trailing" id="XgM-C0-Ad6"/>
                             <constraint firstItem="rPo-IJ-d2m" firstAttribute="centerX" secondItem="psh-IN-TQY" secondAttribute="centerX" id="YpW-qt-FjM"/>
+                            <constraint firstItem="O2h-Rz-Tz9" firstAttribute="centerY" secondItem="d6U-fb-Ows" secondAttribute="centerY" id="Zvb-Ny-F2x"/>
+                            <constraint firstItem="O2h-Rz-Tz9" firstAttribute="centerX" secondItem="d6U-fb-Ows" secondAttribute="centerX" id="aWc-MM-Hmb"/>
                             <constraint firstItem="d6U-fb-Ows" firstAttribute="leading" secondItem="psh-IN-TQY" secondAttribute="leading" id="cwW-t7-JYG"/>
                             <constraint firstItem="psh-IN-TQY" firstAttribute="trailing" secondItem="d6U-fb-Ows" secondAttribute="trailing" id="dNv-zq-LV9"/>
                             <constraint firstItem="CU8-K2-82X" firstAttribute="leading" secondItem="d6U-fb-Ows" secondAttribute="leading" id="tEy-oi-RMb"/>
@@ -212,6 +222,7 @@
                     <connections>
                         <outlet property="colArticles" destination="d6U-fb-Ows" id="RjU-fU-zTs"/>
                         <outlet property="colSearchHistories" destination="CU8-K2-82X" id="chy-RU-M3p"/>
+                        <outlet property="lbNoArticles" destination="O2h-Rz-Tz9" id="xR8-cK-f6X"/>
                         <outlet property="loadingIndicator" destination="rPo-IJ-d2m" id="xss-FP-nPp"/>
                         <outlet property="searchBar" destination="vR1-or-GHg" id="f6A-ok-Moo"/>
                         <outlet property="searchDisplayController" destination="rJ3-Pd-SPV" id="Fdp-9w-3An"/>

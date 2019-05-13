@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 
-class ArticleDataSource: NSObject, UICollectionViewDataSource {
+class ArticleDataProvider: NSObject, UICollectionViewDataSource {
     private var articleManager: ArticleManager!
     
+    //MARK: - Constructors
     override init() {
         super.init()
         self.articleManager = ArticleManager.shared
@@ -21,11 +22,9 @@ class ArticleDataSource: NSObject, UICollectionViewDataSource {
         self.articleManager = articleManager
     }
     
+    //MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let articleManager = self.articleManager {
-            return articleManager.articles.count
-        }
-        return 0
+        return self.articleManager.articles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -34,6 +33,7 @@ class ArticleDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
     
+    //MARK: - Private Methods
     func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void) {
         self.articleManager.getArticles(query: query, page: page, completion: completion)
     }

@@ -16,8 +16,7 @@
 		2623BCDB22886E6A00C16F67 /* ArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCDA22886E6A00C16F67 /* ArticleTests.swift */; };
 		2623BCDD22887B4600C16F67 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCDC22887B4600C16F67 /* CustomImageView.swift */; };
 		2623BCDF2288811800C16F67 /* SearchHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCDE2288811800C16F67 /* SearchHistoryCollectionViewCell.swift */; };
-		2623BCE222888E9D00C16F67 /* ArticleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE122888E9D00C16F67 /* ArticleDataSource.swift */; };
-		2623BCE422889EC800C16F67 /* SearchHistoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE322889EC800C16F67 /* SearchHistoryDataSource.swift */; };
+		2623BCE222888E9D00C16F67 /* ArticleDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE122888E9D00C16F67 /* ArticleDataProvider.swift */; };
 		2623BCE82288A23500C16F67 /* ArticleDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE72288A23500C16F67 /* ArticleDataSourceTests.swift */; };
 		2658C20D22871BF500C30B0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C20C22871BF500C30B0E /* AppDelegate.swift */; };
 		2658C21222871BF500C30B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2658C21022871BF500C30B0E /* Main.storyboard */; };
@@ -30,6 +29,7 @@
 		2658C2442287581A00C30B0E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C2432287581A00C30B0E /* Constants.swift */; };
 		2658C246228759C000C30B0E /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C245228759C000C30B0E /* UrlBuilder.swift */; };
 		2658C24822875A0500C30B0E /* UrlBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C24722875A0500C30B0E /* UrlBuilderTests.swift */; };
+		26A97A842289E18D001033E1 /* SearchHistoryDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A97A832289E18D001033E1 /* SearchHistoryDataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +59,7 @@
 		2623BCDA22886E6A00C16F67 /* ArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleTests.swift; sourceTree = "<group>"; };
 		2623BCDC22887B4600C16F67 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		2623BCDE2288811800C16F67 /* SearchHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		2623BCE122888E9D00C16F67 /* ArticleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataSource.swift; sourceTree = "<group>"; };
-		2623BCE322889EC800C16F67 /* SearchHistoryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryDataSource.swift; sourceTree = "<group>"; };
+		2623BCE122888E9D00C16F67 /* ArticleDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataProvider.swift; sourceTree = "<group>"; };
 		2623BCE72288A23500C16F67 /* ArticleDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataSourceTests.swift; sourceTree = "<group>"; };
 		2658C20922871BF500C30B0E /* PropertyGuruAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PropertyGuruAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2658C20C22871BF500C30B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +78,7 @@
 		2658C2432287581A00C30B0E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2658C245228759C000C30B0E /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		2658C24722875A0500C30B0E /* UrlBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilderTests.swift; sourceTree = "<group>"; };
+		26A97A832289E18D001033E1 /* SearchHistoryDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				2623BCD12288232300C16F67 /* ArticlesViewController.swift */,
-				2623BCD32288281D00C16F67 /* ArticleCollectionViewCell.swift */,
 				2623BCD52288458D00C16F67 /* ArticleDetailsViewController.swift */,
+				2623BCD32288281D00C16F67 /* ArticleCollectionViewCell.swift */,
 				2623BCDE2288811800C16F67 /* SearchHistoryCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -129,8 +129,8 @@
 		2623BCE022888D2C00C16F67 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				2623BCE122888E9D00C16F67 /* ArticleDataSource.swift */,
-				2623BCE322889EC800C16F67 /* SearchHistoryDataSource.swift */,
+				2623BCE122888E9D00C16F67 /* ArticleDataProvider.swift */,
+				26A97A832289E18D001033E1 /* SearchHistoryDataProvider.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -353,17 +353,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2658C2442287581A00C30B0E /* Constants.swift in Sources */,
-				2623BCE422889EC800C16F67 /* SearchHistoryDataSource.swift in Sources */,
 				2658C24122874CE100C30B0E /* Article.swift in Sources */,
 				2623BCD62288458D00C16F67 /* ArticleDetailsViewController.swift in Sources */,
 				2658C246228759C000C30B0E /* UrlBuilder.swift in Sources */,
 				2623BCD22288232300C16F67 /* ArticlesViewController.swift in Sources */,
 				2658C23E22874BA000C30B0E /* ArticleManager.swift in Sources */,
+				26A97A842289E18D001033E1 /* SearchHistoryDataProvider.swift in Sources */,
 				2623BCD42288281D00C16F67 /* ArticleCollectionViewCell.swift in Sources */,
 				2623BCDD22887B4600C16F67 /* CustomImageView.swift in Sources */,
 				2623BCCD22880F4B00C16F67 /* SearchHistoryManager.swift in Sources */,
 				2623BCD922886C4700C16F67 /* CustomActivityIndicatorView.swift in Sources */,
-				2623BCE222888E9D00C16F67 /* ArticleDataSource.swift in Sources */,
+				2623BCE222888E9D00C16F67 /* ArticleDataProvider.swift in Sources */,
 				2658C20D22871BF500C30B0E /* AppDelegate.swift in Sources */,
 				2623BCDF2288811800C16F67 /* SearchHistoryCollectionViewCell.swift in Sources */,
 			);

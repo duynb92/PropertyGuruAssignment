@@ -13,13 +13,14 @@ class ArticlesViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var loadingIndicator: CustomActivityIndicatorView!
     @IBOutlet weak var colSearchHistories: UICollectionView!
+    @IBOutlet weak var lbNoArticles: UILabel!
     
     //var searchHistoryManager: SearchHistoryManager!
     var query: String? = nil
     var page: Int = 0
     let maximumItemsInPage = 10
-    var articleDataSource: ArticleDataSource!
-    var searchHistoryDataSource: SearchHistoryDataSource!
+    var articleDataProvider: ArticleDataProvider!
+    var searchHistoryDataProvider: SearchHistoryDataProvider!
     
     var isSearching: Bool = false {
         didSet {
@@ -28,29 +29,40 @@ class ArticlesViewController: UIViewController {
         }
     }
     
+    var isNotFoundArticles: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.colArticles.isHidden = self.isNotFoundArticles
+                self.lbNoArticles.isHidden = !self.isNotFoundArticles
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        articleDataProvider = ArticleDataProvider()
+        colArticles.dataSource = articleDataProvider
         colArticles.delegate = self
-        articleDataSource = ArticleDataSource()
-        colArticles.dataSource = articleDataSource
-        colSearchHistories.delegate = self
-        searchHistoryDataSource = SearchHistoryDataSource()
-        colSearchHistories.dataSource = searchHistoryDataSource
+        
+        searchHistoryDataProvider = SearchHistoryDataProvider()
+        searchHistoryDataProvider.delegate = self
+        colSearchHistories.dataSource = searchHistoryDataProvider
+        colSearchHistories.delegate = searchHistoryDataProvider
+        
         searchBar.delegate = self
         
         toogleLoadingIndicator()
-        articleDataSource.getArticles(query: nil, page: page) { [weak self] (result) in
+        articleDataProvider.getArticles(query: nil, page: page) { [weak self] (result) in
             self?.toogleLoadingIndicator()
             self?.getArticlesCompletion(result)
         }
     }
     
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowArticleDetails" {
             if let destinationVC = segue.destination as? ArticleDetailsViewController, let selectedIndexPaths = self.colArticles.indexPathsForSelectedItems {
-                destinationVC.article = self.articleDataSource.getArticle(at: selectedIndexPaths[0])
+                destinationVC.article = self.articleDataProvider.getArticle(at: selectedIndexPaths[0])
             }
         }
     }
@@ -63,21 +75,23 @@ class ArticlesViewController: UIViewController {
     
     func getArticlesCompletion(_ result: APIResult<[Article]>) {
         switch result {
-        case .success(let articles):
-            let beforeAddedSize = self.articleDataSource.getArticlesCount() - articles.count
-            DispatchQueue.main.async {
-                self.colArticles.performBatchUpdates({
-                    var indexPaths: [IndexPath] = []
-                    for i in beforeAddedSize..<beforeAddedSize+articles.count {
-                        indexPaths.append(IndexPath(row: i, section: 0))
-                    }
-                    self.colArticles.insertItems(at: indexPaths)
-                }, completion: { (completed) in
-                    print("BATCH UPDATE COMPLETED? \(completed)")
-                })
-            }
-        case .failure(let error):
-            print(error)
+            case .success(let articles):
+                isNotFoundArticles = self.articleDataProvider.getArticlesCount() == 0
+                let beforeAddedSize = self.articleDataProvider.getArticlesCount() - articles.count
+                DispatchQueue.main.async {
+                    self.colArticles.performBatchUpdates({
+                        var indexPaths: [IndexPath] = []
+                        for i in beforeAddedSize..<beforeAddedSize+articles.count {
+                            indexPaths.append(IndexPath(row: i, section: 0))
+                        }
+                        self.colArticles.insertItems(at: indexPaths)
+                    }, completion: { (completed) in
+                        print("BATCH UPDATE COMPLETED? \(completed)")
+                    })
+                }
+            case .failure(let error):
+                isNotFoundArticles = true
+                print(error)
         }
     }
     
@@ -92,57 +106,53 @@ class ArticlesViewController: UIViewController {
         self.searchBar.text = self.query
         
         //Clear current articles
-        articleDataSource.clearArticles()
+        articleDataProvider.clearArticles()
         colArticles.reloadData()
         
         //Get articles with query
         toogleLoadingIndicator()
-        articleDataSource.getArticles(query: self.query, page: self.page) { [weak self] (result) in
+        articleDataProvider.getArticles(query: self.query, page: self.page) { [weak self] (result) in
             self?.toogleLoadingIndicator()
             self?.getArticlesCompletion(result)
         }
     }
     
-    func appendSearchHistory(_ searchString: String) {
-        //Add search string to history
-        searchHistoryDataSource.appendSearchHistory(searchString)
-    }
-    
     func stopSearching() {
         isSearching = false
         self.view.endEditing(true)
-        colSearchHistories.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        if (searchHistoryDataProvider.collectionView(colSearchHistories, numberOfItemsInSection: 0) > 0) {
+            colSearchHistories.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
+    
+    func stillHaveArticlesToGet() -> Bool {
+        return self.articleDataProvider.getArticlesCount() < (self.page + 1) * maximumItemsInPage
     }
 }
 
 
 extension ArticlesViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height: CGFloat = 200.0
+        return CGSize(width: UIScreen.main.bounds.size.width, height: height)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == colArticles {
             self.performSegue(withIdentifier: "ShowArticleDetails", sender: nil)
-        } else {
-            stopSearching()
-            let searchString = searchHistoryDataSource.getSearchHistory(at:indexPath.row)
-            appendSearchHistory(searchString)
-            doSearchArticle(searchString)
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height: CGFloat = collectionView == colArticles ? 200.0 : 50.0
-        return CGSize(width: UIScreen.main.bounds.size.width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == colArticles {
-            if indexPath.row == self.articleDataSource.getArticlesCount() - 2 {
+            if indexPath.row == self.articleDataProvider.getArticlesCount() - 2 {
                 //Check if still have articles to get
-                if (self.articleDataSource.getArticlesCount() < (self.page + 1) * maximumItemsInPage) {
+                if (stillHaveArticlesToGet()) {
                     return
                 }
-                self.page = self.articleDataSource.getArticlesCount() / maximumItemsInPage
+                self.page = self.articleDataProvider.getArticlesCount() / maximumItemsInPage
                 toogleLoadingIndicator()
-                articleDataSource.getArticles(query: self.query, page: self.page) { [weak self] (result) in
+                articleDataProvider.getArticles(query: self.query, page: self.page) { [weak self] (result) in
                     self?.toogleLoadingIndicator()
                     self?.getArticlesCompletion(result)
                 }
@@ -155,7 +165,7 @@ extension ArticlesViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         stopSearching()
         if let searchString = searchBar.text {
-            appendSearchHistory(searchString)
+            SearchHistoryManager.shared.appendSearchHistory(searchString)
             doSearchArticle(searchString)
         }
     }
@@ -172,5 +182,13 @@ extension ArticlesViewController: UISearchBarDelegate {
         isSearching = true
         self.colSearchHistories.reloadData()
         return true
+    }
+}
+
+
+extension ArticlesViewController : SearchHistoryDataProviderDelegate {
+    func didSearchArticle(_ searchString: String) {
+        stopSearching()
+        doSearchArticle(searchString)
     }
 }

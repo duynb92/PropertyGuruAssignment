@@ -9,7 +9,17 @@
 import Foundation
 import UIKit
 
-class ArticleDataProvider: NSObject, UICollectionViewDataSource {
+protocol ArticleDataProviderType: UICollectionViewDataSource {
+    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void)
+    
+    func getArticlesCount() -> Int
+    
+    func getArticle(at indexPath: IndexPath) -> Article?
+    
+    func clearArticles()
+}
+
+class ArticleDataProvider: NSObject, ArticleDataProviderType {
     private var articleManager: ArticleManager!
     
     //MARK: - Constructors
@@ -34,7 +44,7 @@ class ArticleDataProvider: NSObject, UICollectionViewDataSource {
     }
     
     //MARK: - Private Methods
-    func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void) {
+    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
         self.articleManager.getArticles(query: query, page: page, completion: completion)
     }
     

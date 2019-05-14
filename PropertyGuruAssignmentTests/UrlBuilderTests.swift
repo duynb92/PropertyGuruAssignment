@@ -38,6 +38,31 @@ class UrlBuilderTests: XCTestCase {
         XCTAssertTrue(url.contains("q=\(givenQuery)"))
     }
     
+    func test_buildUrl_withNilQuery_shouldReturnEmptyQueryInUrl() {
+        //given
+        let givenQuery: String? = nil
+        
+        //when
+        let url = urlBuilder.withQuery(query: givenQuery).build()
+        
+        //then
+        XCTAssertNotNil(url)
+        XCTAssertFalse(url.contains("q="))
+    }
+    
+    func test_buildUrl_withEmptyQuery_shouldReturnEmptyQueryInUrl() {
+        //given
+        let givenQuery = ""
+        
+        //when
+        let url = urlBuilder.withQuery(query: givenQuery).build()
+        
+        //then
+        XCTAssertNotNil(url)
+        XCTAssertFalse(url.contains(givenQuery))
+        XCTAssertFalse(url.contains("q=\(givenQuery)"))
+    }
+    
     func test_buildUrl_withPage_shouldReturnPageInUrl() {
         //given
         let givenPage = 1
@@ -49,6 +74,19 @@ class UrlBuilderTests: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertTrue(url.contains(String(givenPage)))
         XCTAssertTrue(url.contains("page=\(String(givenPage))"))
+    }
+    
+    func test_buildUrl_withInvalidPage_shouldReturnPageInUrl() {
+        //given
+        let givenPage = -1
+        
+        //when
+        let url = urlBuilder.withPage(page: givenPage).build()
+        
+        //then
+        XCTAssertNotNil(url)
+        XCTAssertFalse(url.contains(String(givenPage)))
+        XCTAssertFalse(url.contains("page=\(String(givenPage))"))
     }
     
     func test_buildUrl_withQueryAndPage_shouldReturnQueryAndPageInUrl() {

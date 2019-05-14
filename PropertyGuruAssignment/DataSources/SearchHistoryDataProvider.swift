@@ -9,32 +9,50 @@
 import Foundation
 import UIKit
 
+protocol SearchHistoryDataProviderType: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    var delegate: SearchHistoryDataProviderDelegate? { get set }
+    
+    /// Append search string to history
+    ///
+    /// - Parameter searchString: search string to be appended
+    func appendSearchHistory(_ searchString: String)
+    
+    /// Get search string at specific index
+    ///
+    /// - Parameter index: index of search string to get
+    /// - Returns: search string if index is valid
+    func getSearchHistory(at index: Int) -> String?
+}
+
 protocol SearchHistoryDataProviderDelegate {
     func didSearchArticle(_ searchString: String)
 }
 
-class SearchHistoryDataProvider: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SearchHistoryDataProvider: NSObject, SearchHistoryDataProviderType {
+    
     var delegate: SearchHistoryDataProviderDelegate?
     
-    private var searchHistoryManager: SearchHistoryManager!
+    internal var searchHistoryManager: SearchHistoryManagerType!
     
     //MARK: - Constructors
     override init() {
-        self.searchHistoryManager = SearchHistoryManager.shared
         super.init()
+        self.searchHistoryManager = SearchHistoryManager.shared
     }
     
-    init(_ searchHistoryManager: SearchHistoryManager) {
+    init(_ searchHistoryManager: SearchHistoryManagerType) {
         self.searchHistoryManager = searchHistoryManager
         super.init()
     }
     
     //MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let searchString = getSearchHistory(at:indexPath.row)
-        appendSearchHistory(searchString)
-        if let delegate = delegate {
-            delegate.didSearchArticle(searchString)
+        if let searchString = getSearchHistory(at:indexPath.row) {
+            appendSearchHistory(searchString)
+            if let delegate = delegate {
+                delegate.didSearchArticle(searchString)
+            }
         }
     }
     
@@ -57,7 +75,7 @@ class SearchHistoryDataProvider: NSObject, UICollectionViewDataSource, UICollect
     /// Append search string to history
     ///
     /// - Parameter searchString: search string to be appended
-    private func appendSearchHistory(_ searchString: String) {
+    internal func appendSearchHistory(_ searchString: String) {
         return self.searchHistoryManager.appendSearchHistory(searchString)
     }
     
@@ -66,7 +84,11 @@ class SearchHistoryDataProvider: NSObject, UICollectionViewDataSource, UICollect
     ///
     /// - Parameter index: index of search string to get
     /// - Returns: search string if index is valid
-    private func getSearchHistory(at index: Int) -> String {
-        return searchHistoryManager.getReversedSearchHistory()[index]
+    internal func getSearchHistory(at index: Int) -> String? {
+        if index >= 0 && index < searchHistoryManager.getReversedSearchHistory().count {
+            return searchHistoryManager.getReversedSearchHistory()[index]
+        } else {
+            return nil
+        }
     }
 }

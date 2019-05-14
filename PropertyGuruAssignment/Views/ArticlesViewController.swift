@@ -8,19 +8,39 @@
 
 import UIKit
 
-class ArticlesViewController: UIViewController {
+protocol ArticlesViewControllerType {
+    func getArticles()
+    
+    func toogleLoadingIndicator()
+    
+    func getArticlesCompletion(_ result: APIResult<[Article]>)
+    
+    func doSearchArticle(_ query: String)
+    
+    func stopSearching()
+}
+
+class ArticlesViewController: UIViewController, ArticlesViewControllerType {
     @IBOutlet weak var colArticles: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var loadingIndicator: CustomActivityIndicatorView!
     @IBOutlet weak var colSearchHistories: UICollectionView!
     @IBOutlet weak var lbNoArticles: UILabel!
     
-    //var searchHistoryManager: SearchHistoryManager!
     var query: String? = nil
     var page: Int = 0
     let maximumItemsInPage = 10
-    var articleDataProvider: ArticleDataProvider!
-    var searchHistoryDataProvider: SearchHistoryDataProvider!
+    var articleDataProvider: ArticleDataProviderType!
+    var searchHistoryDataProvider: SearchHistoryDataProviderType!
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        print("__________________SELF________________")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     var isSearching: Bool = false {
         didSet {
@@ -52,11 +72,7 @@ class ArticlesViewController: UIViewController {
         
         searchBar.delegate = self
         
-        toogleLoadingIndicator()
-        articleDataProvider.getArticles(query: nil, page: page) { [weak self] (result) in
-            self?.toogleLoadingIndicator()
-            self?.getArticlesCompletion(result)
-        }
+        getArticles()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,6 +80,14 @@ class ArticlesViewController: UIViewController {
             if let destinationVC = segue.destination as? ArticleDetailsViewController, let selectedIndexPaths = self.colArticles.indexPathsForSelectedItems {
                 destinationVC.article = self.articleDataProvider.getArticle(at: selectedIndexPaths[0])
             }
+        }
+    }
+    
+    func getArticles() {
+        toogleLoadingIndicator()
+        articleDataProvider.getArticles(query: query, page: page) { [weak self] (result) in
+            self?.toogleLoadingIndicator()
+            self?.getArticlesCompletion(result)
         }
     }
     
@@ -110,11 +134,7 @@ class ArticlesViewController: UIViewController {
         colArticles.reloadData()
         
         //Get articles with query
-        toogleLoadingIndicator()
-        articleDataProvider.getArticles(query: self.query, page: self.page) { [weak self] (result) in
-            self?.toogleLoadingIndicator()
-            self?.getArticlesCompletion(result)
-        }
+        getArticles()
     }
     
     func stopSearching() {
@@ -151,11 +171,7 @@ extension ArticlesViewController: UICollectionViewDelegate, UICollectionViewDele
                     return
                 }
                 self.page = self.articleDataProvider.getArticlesCount() / maximumItemsInPage
-                toogleLoadingIndicator()
-                articleDataProvider.getArticles(query: self.query, page: self.page) { [weak self] (result) in
-                    self?.toogleLoadingIndicator()
-                    self?.getArticlesCompletion(result)
-                }
+                getArticles()
             }
         }
     }

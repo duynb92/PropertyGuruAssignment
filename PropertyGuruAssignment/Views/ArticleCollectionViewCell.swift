@@ -14,10 +14,6 @@ class ArticleCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lbSnippet: UILabel!
     @IBOutlet weak var lbTitle: UILabel!
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
     func setupCell(_ article: Article) {
         let formatter = DateFormatter()
         formatter.dateStyle = .long

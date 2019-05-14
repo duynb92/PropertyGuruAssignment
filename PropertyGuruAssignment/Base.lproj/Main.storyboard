@@ -29,7 +29,7 @@
         <!--Articles-->
         <scene sceneID="PGL-qm-KyS">
             <objects>
-                <viewController id="pQH-Ay-76K" customClass="ArticlesViewController" customModule="PropertyGuruAssignment" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticlesViewController" id="pQH-Ay-76K" customClass="ArticlesViewController" customModule="PropertyGuruAssignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TGX-1u-Eo8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

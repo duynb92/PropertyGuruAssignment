@@ -22,6 +22,29 @@ enum APIResult<T> {
     case failure(APIError)
 }
 
+protocol ArticleManagerType {
+    
+    /// Singleton shared instance
+    static var shared: Self { get }
+    
+    /// Get NYT Articles with Query and Page
+    ///
+    /// - Parameters:
+    ///   - query: string to filter results
+    ///   - page: pagination of results (eg 0,1,2,3,...)
+    ///   - completion: callback return list of Articles OR error
+    func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void)
+    
+    /// Get article at index
+    ///
+    /// - Parameter index: index of article to get
+    /// - Returns: If index is valid, return Article, otherwise nil
+    func getArticle(at index: Int) -> Article?
+    
+    /// Clear all articles
+    func clearArticles()
+}
+
 class ArticleManager {
     
     static let shared = ArticleManager()
@@ -34,7 +57,7 @@ class ArticleManager {
     ///   - query: string to filter results
     ///   - page: pagination of results (eg 0,1,2,3,...)
     ///   - completion: callback return list of Articles OR error
-    func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void) {
+    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
         //build NYT url
         let url = UrlBuilder().withPage(page: page).withQuery(query: query).build()
         

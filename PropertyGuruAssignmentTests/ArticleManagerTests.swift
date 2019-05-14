@@ -57,7 +57,7 @@ class ArticleManagerTests: XCTestCase {
     func test_getArticles_withoutQueryAndPage_shouldReturnArticles() {
         //given
         let givenQuery: String? = nil
-        let givenPage: Int? = nil
+        let givenPage: Int = -2
         
         //when
         let expectation = self.expectation(description: "testGetArtices")
@@ -86,7 +86,7 @@ class ArticleManagerTests: XCTestCase {
     func test_getArticles_withQueryAndWithoutPage_shouldReturnArticles() {
         //given
         let givenQuery: String? = "election"
-        let givenPage: Int? = nil
+        let givenPage: Int = -2
         
         //when
         let expectation = self.expectation(description: "testGetArtices")
@@ -115,7 +115,7 @@ class ArticleManagerTests: XCTestCase {
     func test_getArticles_withPageAndWithoutQuery_shouldReturnArticles() {
         //given
         let givenQuery: String? = nil
-        let givenPage: Int? = 0
+        let givenPage: Int = 0
         
         //when
         let expectation = self.expectation(description: "testGetArtices")
@@ -144,7 +144,7 @@ class ArticleManagerTests: XCTestCase {
     func test_getArticles_whenFailed_shouldReturnError() {
         //given
         let givenQuery: String? = nil
-        let givenPage: Int? = 999 //NYT API will fail when page is larger than 200
+        let givenPage: Int = 999 //NYT API will fail when page is larger than 200
         
         //when
         let expectation = self.expectation(description: "testGetArtices")

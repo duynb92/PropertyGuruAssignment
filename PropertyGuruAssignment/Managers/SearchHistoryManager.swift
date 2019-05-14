@@ -8,7 +8,29 @@
 
 import Foundation
 
-class SearchHistoryManager {
+protocol SearchHistoryManagerType {
+    
+    /// Append new search string to User Defaults
+    ///
+    /// - Parameter searchString: New search string to append
+    func appendSearchHistory(_ searchString: String)
+    
+    /// Get search histories from User Defaults
+    ///
+    /// - Returns: List of search strings
+    func getSearchHistories() -> [String]
+    
+    /// Get search histories in reversed
+    ///
+    /// - Returns: list of search strings
+    func getReversedSearchHistory() -> [String]
+    
+    /// Clear all search histories
+    func clearSearchHistories()
+}
+
+final class SearchHistoryManager: SearchHistoryManagerType {
+    
     static let shared = SearchHistoryManager()
     
     var searchHistoryKey = "SEARCH_HISTORY_KEY"

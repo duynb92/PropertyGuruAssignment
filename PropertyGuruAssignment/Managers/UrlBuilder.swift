@@ -17,14 +17,14 @@ class UrlBuilder {
     }
     
     func withQuery(query: String?) -> UrlBuilder {
-        if let query = query {
+        if let query = query, !query.isEmpty {
             self.query = query
         }
         return self
     }
     
-    func withPage(page: Int?) -> UrlBuilder {
-        if let page = page, page >= 0 {
+    func withPage(page: Int) -> UrlBuilder {
+        if page >= 0 {
             self.page = page
         }
         return self

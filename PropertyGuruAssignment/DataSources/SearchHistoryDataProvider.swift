@@ -87,8 +87,7 @@ class SearchHistoryDataProvider: NSObject, SearchHistoryDataProviderType {
     internal func getSearchHistory(at index: Int) -> String? {
         if index >= 0 && index < searchHistoryManager.getReversedSearchHistory().count {
             return searchHistoryManager.getReversedSearchHistory()[index]
-        } else {
-            return nil
         }
+        return nil
     }
 }

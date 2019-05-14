@@ -39,6 +39,13 @@ class SearchHistoryDataProviderTests: XCTestCase {
         }
     }
     
+    class MockSearchHistoryDataProviderDeleagte : SearchHistoryDataProviderDelegate {
+        var didSearchArticleCalled = false
+        func didSearchArticle(_ searchString: String) {
+            didSearchArticleCalled = true
+        }
+    }
+    
     var searchHistoryDataProvider: SearchHistoryDataProvider!
     var mockSearchHistoryManager: MockSearchHistoryManager!
     
@@ -102,16 +109,18 @@ class SearchHistoryDataProviderTests: XCTestCase {
         XCTAssertNotNil(searchHistory)
     }
     
-    func test_getSearchHistory_withInvalidIndex_shouldReturnString() {
+    func test_getSearchHistory_withInvalidIndex_shouldReturnNil() {
         //given
         mockSearchHistoryManager.searchStrings = ["searchString1","searchString2", "searchString3", "searchString4", "searchString5"]
         searchHistoryDataProvider.searchHistoryManager = mockSearchHistoryManager
         
         //when
-        let searchHistory = searchHistoryDataProvider.getSearchHistory(at: -1)
+        let searchHistory1 = searchHistoryDataProvider.getSearchHistory(at: -1)
+        let searchHistory2 = searchHistoryDataProvider.getSearchHistory(at: 8)
         
         //then
-        XCTAssertNil(searchHistory)
+        XCTAssertNil(searchHistory1)
+        XCTAssertNil(searchHistory2)
     }
     
     func test_getSearchHistory_shouldReturnFromReversedOrder() {
@@ -125,5 +134,42 @@ class SearchHistoryDataProviderTests: XCTestCase {
         //then
         XCTAssertNotNil(searchHistory)
         XCTAssertTrue(searchHistory == "searchString5")
+    }
+    
+    func test_collectionViewDidSelectItem_withValidIndexPath_shouldCallAppendSearchHistory(){
+        //given
+        mockSearchHistoryManager.searchStrings = ["searchString1","searchString2", "searchString3", "searchString4", "searchString5"]
+        searchHistoryDataProvider.searchHistoryManager = mockSearchHistoryManager
+        
+        //when
+        searchHistoryDataProvider.collectionView(UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout()), didSelectItemAt: IndexPath(row: 0, section: 0))
+        
+        //then
+        XCTAssertTrue(mockSearchHistoryManager.appendSearchHistoryCalled)
+    }
+    
+    func test_collectionViewDidSelectItem_withValidIndexPath_withDelegate_shouldCallDidSearchArticle(){
+        //given
+        mockSearchHistoryManager.searchStrings = ["searchString1","searchString2", "searchString3", "searchString4", "searchString5"]
+        searchHistoryDataProvider.searchHistoryManager = mockSearchHistoryManager
+        let mockSearchHistoryDataProviderDelegate = MockSearchHistoryDataProviderDeleagte()
+        searchHistoryDataProvider.delegate = mockSearchHistoryDataProviderDelegate
+        
+        //when
+        searchHistoryDataProvider.collectionView(UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout()), didSelectItemAt: IndexPath(row: 0, section: 0))
+        
+        //then
+        XCTAssertTrue(mockSearchHistoryDataProviderDelegate.didSearchArticleCalled)
+    }
+    
+    func test_collectionViewDidSelectItem_withInvalidIndexPath_shouldNotCallAppendSearchHistory(){
+        //given
+        searchHistoryDataProvider.searchHistoryManager = mockSearchHistoryManager
+        
+        //when
+        searchHistoryDataProvider.collectionView(UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout()), didSelectItemAt: IndexPath(row: -2, section: 0))
+        
+        //then
+        XCTAssertFalse(mockSearchHistoryManager.appendSearchHistoryCalled)
     }
 }

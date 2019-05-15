@@ -12,7 +12,7 @@ import XCTest
 class ArticleDataProviderTests: XCTestCase {
 
     class MockArticleManager : ArticleManager {
-        override func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void) {
+        override func fetchArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
             articles = [
                 Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
                 Article(id: "id", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "webUrl"),
@@ -37,7 +37,7 @@ class ArticleDataProviderTests: XCTestCase {
     
     func test_getArticle_withValidIndex_shouldReturnArticle() {
         //given
-        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.fetchArticles(query: "test", page: 0) { (result) in
             
         }
         
@@ -50,7 +50,7 @@ class ArticleDataProviderTests: XCTestCase {
     
     func test_getArticle_withInvalidIndex_shouldReturnNil() {
         //given
-        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.fetchArticles(query: "test", page: 0) { (result) in
             
         }
         
@@ -63,7 +63,7 @@ class ArticleDataProviderTests: XCTestCase {
     
     func test_clearArticles_shouldReturnEmpty() {
         //given
-        articleDataProvider.getArticles(query: "test", page: 0) { (result) in
+        articleDataProvider.fetchArticles(query: "test", page: 0) { (result) in
             
         }
         

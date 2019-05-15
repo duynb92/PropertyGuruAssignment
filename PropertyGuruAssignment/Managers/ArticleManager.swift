@@ -24,16 +24,13 @@ enum APIResult<T> {
 
 protocol ArticleManagerType {
     
-    /// Singleton shared instance
-    static var shared: Self { get }
-    
-    /// Get NYT Articles with Query and Page
+    /// Fetch NYT Articles with Query and Page
     ///
     /// - Parameters:
     ///   - query: string to filter results
     ///   - page: pagination of results (eg 0,1,2,3,...)
     ///   - completion: callback return list of Articles OR error
-    func getArticles(query: String?, page: Int?, completion: @escaping (APIResult<[Article]>) -> Void)
+    func fetchArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void)
     
     /// Get article at index
     ///
@@ -43,9 +40,12 @@ protocol ArticleManagerType {
     
     /// Clear all articles
     func clearArticles()
+    
+    /// Get articles
+    func getArticles() -> [Article]
 }
 
-class ArticleManager {
+class ArticleManager: ArticleManagerType {
     
     static let shared = ArticleManager()
     
@@ -57,7 +57,7 @@ class ArticleManager {
     ///   - query: string to filter results
     ///   - page: pagination of results (eg 0,1,2,3,...)
     ///   - completion: callback return list of Articles OR error
-    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
+    func fetchArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
         //build NYT url
         let url = UrlBuilder().withPage(page: page).withQuery(query: query).build()
         
@@ -113,5 +113,9 @@ class ArticleManager {
     /// Clear all articles
     func clearArticles() {
         self.articles = []
+    }
+    
+    func getArticles() -> [Article] {
+        return self.articles
     }
 }

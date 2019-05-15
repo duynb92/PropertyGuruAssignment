@@ -35,7 +35,7 @@ class ArticleManagerTests: XCTestCase {
         
         var articles : [Article]?
         
-        articleManager.getArticles(query: givenQuery, page: givenPage, completion: { (result) in
+        articleManager.fetchArticles(query: givenQuery, page: givenPage, completion: { (result) in
             switch result {
             case .success(let data):
                 articles = data
@@ -64,7 +64,7 @@ class ArticleManagerTests: XCTestCase {
         
         var articles : [Article]?
         
-        articleManager.getArticles(query: givenQuery, page: givenPage, completion: { (result) in
+        articleManager.fetchArticles(query: givenQuery, page: givenPage, completion: { (result) in
             switch result {
             case .success(let data):
                 articles = data
@@ -80,7 +80,9 @@ class ArticleManagerTests: XCTestCase {
         
         //then
         XCTAssertNotNil(articles)
-        XCTAssertTrue((articles?.count)! > 0)
+        if let articles = articles {
+            XCTAssertTrue(articles.count > 0)
+        }
     }
 
     func test_getArticles_withQueryAndWithoutPage_shouldReturnArticles() {
@@ -93,7 +95,7 @@ class ArticleManagerTests: XCTestCase {
         
         var articles : [Article]?
         
-        articleManager.getArticles(query: givenQuery, page: givenPage, completion: { (result) in
+        articleManager.fetchArticles(query: givenQuery, page: givenPage, completion: { (result) in
             switch result {
             case .success(let data):
                 articles = data
@@ -122,7 +124,7 @@ class ArticleManagerTests: XCTestCase {
         
         var articles : [Article]?
         
-        articleManager.getArticles(query: givenQuery, page: givenPage, completion: { (result) in
+        articleManager.fetchArticles(query: givenQuery, page: givenPage, completion: { (result) in
             switch result {
             case .success(let data):
                 articles = data
@@ -152,7 +154,7 @@ class ArticleManagerTests: XCTestCase {
         var articles : [Article]?
         var apiError: Error?
         
-        articleManager.getArticles(query: givenQuery, page: givenPage, completion: { (result) in
+        articleManager.fetchArticles(query: givenQuery, page: givenPage, completion: { (result) in
             switch result {
             case .success(let data):
                 articles = data

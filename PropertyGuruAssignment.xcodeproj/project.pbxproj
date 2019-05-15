@@ -30,6 +30,7 @@
 		2658C2442287581A00C30B0E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C2432287581A00C30B0E /* Constants.swift */; };
 		2658C246228759C000C30B0E /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C245228759C000C30B0E /* UrlBuilder.swift */; };
 		2658C24822875A0500C30B0E /* UrlBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C24722875A0500C30B0E /* UrlBuilderTests.swift */; };
+		265F5098228C89EE0026EBC3 /* ArticleDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265F5097228C89EE0026EBC3 /* ArticleDetailsViewControllerTests.swift */; };
 		26A97A842289E18D001033E1 /* SearchHistoryDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A97A832289E18D001033E1 /* SearchHistoryDataProvider.swift */; };
 		26A97A862289EE46001033E1 /* SearchHistoryDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A97A852289EE46001033E1 /* SearchHistoryDataProviderTests.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		2658C2432287581A00C30B0E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2658C245228759C000C30B0E /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		2658C24722875A0500C30B0E /* UrlBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilderTests.swift; sourceTree = "<group>"; };
+		265F5097228C89EE0026EBC3 /* ArticleDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		26A97A832289E18D001033E1 /* SearchHistoryDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryDataProvider.swift; sourceTree = "<group>"; };
 		26A97A852289EE46001033E1 /* SearchHistoryDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryDataProviderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,6 +190,7 @@
 				2623BCE72288A23500C16F67 /* ArticleDataProviderTests.swift */,
 				26A97A852289EE46001033E1 /* SearchHistoryDataProviderTests.swift */,
 				2644008C228B2DDC00722F85 /* ArticlesViewControllerTests.swift */,
+				265F5097228C89EE0026EBC3 /* ArticleDetailsViewControllerTests.swift */,
 			);
 			path = PropertyGuruAssignmentTests;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				2623BCCF2288136600C16F67 /* SearchHistoryManagerTests.swift in Sources */,
 				2658C23B22874B8F00C30B0E /* ArticleManagerTests.swift in Sources */,
 				2658C24822875A0500C30B0E /* UrlBuilderTests.swift in Sources */,
+				265F5098228C89EE0026EBC3 /* ArticleDetailsViewControllerTests.swift in Sources */,
 				2623BCE82288A23500C16F67 /* ArticleDataProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

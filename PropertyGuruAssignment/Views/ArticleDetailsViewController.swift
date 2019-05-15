@@ -14,7 +14,7 @@ class ArticleDetailsViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: CustomActivityIndicatorView!
     
     var article: Article?
-    var articleManager: ArticleManager!
+    var articleManager: ArticleManagerType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +51,14 @@ class ArticleDetailsViewController: UIViewController {
     ///
     /// - Parameter gestureRecognizer: Gesture that user has interacted with
     @objc func handleSwipeGesture(gestureRecognizer: UISwipeGestureRecognizer) {
-        if let currentArticleIndex = self.articleManager.articles.firstIndex(where: { $0.id == article?.id }) {
-            let swipeLeftCondition = gestureRecognizer.direction == .left && currentArticleIndex < self.articleManager.articles.count - 1
+        let articles = self.articleManager.getArticles()
+        if let currentArticleIndex = articles.firstIndex(where: { $0.id == article?.id }) {
+            let swipeLeftCondition = gestureRecognizer.direction == .left && currentArticleIndex < articles.count - 1
             let swipeRightCondition = gestureRecognizer.direction == .right && currentArticleIndex > 0
             if swipeLeftCondition {
-                self.article = self.articleManager.articles[currentArticleIndex+1]
+                self.article = articles[currentArticleIndex+1]
             } else if swipeRightCondition {
-                self.article = self.articleManager.articles[currentArticleIndex-1]
+                self.article = articles[currentArticleIndex-1]
             }
             if (swipeLeftCondition || swipeRightCondition) {
                 loadArticleDetails()

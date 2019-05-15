@@ -8,19 +8,7 @@
 
 import UIKit
 
-protocol ArticlesViewControllerType {
-    func getArticles()
-    
-    func toogleLoadingIndicator()
-    
-    func getArticlesCompletion(_ result: APIResult<[Article]>)
-    
-    func doSearchArticle(_ query: String)
-    
-    func stopSearching()
-}
-
-class ArticlesViewController: UIViewController, ArticlesViewControllerType {
+class ArticlesViewController: UIViewController {
     @IBOutlet weak var colArticles: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var loadingIndicator: CustomActivityIndicatorView!
@@ -32,16 +20,7 @@ class ArticlesViewController: UIViewController, ArticlesViewControllerType {
     let maximumItemsInPage = 10
     var articleDataProvider: ArticleDataProviderType!
     var searchHistoryDataProvider: SearchHistoryDataProviderType!
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print("__________________SELF________________")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
+
     var isSearching: Bool = false {
         didSet {
             colArticles.isHidden = isSearching
@@ -72,7 +51,7 @@ class ArticlesViewController: UIViewController, ArticlesViewControllerType {
         
         searchBar.delegate = self
         
-        getArticles()
+        fetchArticles()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,9 +62,9 @@ class ArticlesViewController: UIViewController, ArticlesViewControllerType {
         }
     }
     
-    func getArticles() {
+    func fetchArticles() {
         toogleLoadingIndicator()
-        articleDataProvider.getArticles(query: query, page: page) { [weak self] (result) in
+        articleDataProvider.fetchArticles(query: query, page: page) { [weak self] (result) in
             self?.toogleLoadingIndicator()
             self?.getArticlesCompletion(result)
         }
@@ -134,7 +113,7 @@ class ArticlesViewController: UIViewController, ArticlesViewControllerType {
         colArticles.reloadData()
         
         //Get articles with query
-        getArticles()
+        fetchArticles()
     }
     
     func stopSearching() {
@@ -145,7 +124,7 @@ class ArticlesViewController: UIViewController, ArticlesViewControllerType {
         }
     }
     
-    func stillHaveArticlesToGet() -> Bool {
+    func isLastPageOfArticles() -> Bool {
         return self.articleDataProvider.getArticlesCount() < (self.page + 1) * maximumItemsInPage
     }
 }
@@ -167,11 +146,11 @@ extension ArticlesViewController: UICollectionViewDelegate, UICollectionViewDele
         if collectionView == colArticles {
             if indexPath.row == self.articleDataProvider.getArticlesCount() - 2 {
                 //Check if still have articles to get
-                if (stillHaveArticlesToGet()) {
+                if (isLastPageOfArticles()) {
                     return
                 }
                 self.page = self.articleDataProvider.getArticlesCount() / maximumItemsInPage
-                getArticles()
+                fetchArticles()
             }
         }
     }

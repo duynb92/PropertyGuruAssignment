@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ArticleDataProviderType: UICollectionViewDataSource {
-    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void)
+    func fetchArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void)
     
     func getArticlesCount() -> Int
     
@@ -20,7 +20,7 @@ protocol ArticleDataProviderType: UICollectionViewDataSource {
 }
 
 class ArticleDataProvider: NSObject, ArticleDataProviderType {
-    private var articleManager: ArticleManager!
+    private var articleManager: ArticleManagerType!
     
     //MARK: - Constructors
     override init() {
@@ -28,28 +28,28 @@ class ArticleDataProvider: NSObject, ArticleDataProviderType {
         self.articleManager = ArticleManager.shared
     }
     
-    init(_ articleManager: ArticleManager) {
+    init(_ articleManager: ArticleManagerType) {
         self.articleManager = articleManager
     }
     
     //MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.articleManager.articles.count
+        return self.articleManager.getArticles().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  "ArticleCollectionViewCell", for: indexPath) as! ArticleCollectionViewCell
-        cell.setupCell(self.articleManager.articles[indexPath.row])
+        cell.setupCell(self.articleManager.getArticles()[indexPath.row])
         return cell
     }
     
     //MARK: - Private Methods
-    func getArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
-        self.articleManager.getArticles(query: query, page: page, completion: completion)
+    func fetchArticles(query: String?, page: Int, completion: @escaping (APIResult<[Article]>) -> Void) {
+        self.articleManager.fetchArticles(query: query, page: page, completion: completion)
     }
     
     func getArticlesCount() -> Int {
-        return self.articleManager.articles.count
+        return self.articleManager.getArticles().count
     }
     
     func getArticle(at indexPath: IndexPath) -> Article? {

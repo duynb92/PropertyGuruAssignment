@@ -62,24 +62,6 @@ class ArticleDetailsViewControllerTests: XCTestCase {
         articleDetailsViewController = nil
         super.tearDown()
     }
-
-    func test_webViewLoadURL_withValidUrl_shouldCallLoadingIndicatorToogle() {
-        //given
-        let mockActivityIndicator = MockCustomActivityIndicatorView()
-        articleDetailsViewController.loadingIndicator = mockActivityIndicator
-        
-        //when
-        let urlRequest = URLRequest(url: URL(string:"http://www.google.com")!)
-        articleDetailsViewController.webView.load(urlRequest)
-        let expectation = self.expectation(description: "webViewLoadURL")
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 10, handler: nil)
-        
-        //then
-        XCTAssertTrue(mockActivityIndicator.toogleCalled)
-    }
     
     func test_loadAricleDetails_withArticle_shouldCallLoadOnWebView() {
         //given
@@ -148,6 +130,50 @@ class ArticleDetailsViewControllerTests: XCTestCase {
         let article2 = Article(id: "5", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "web_url")
         articleDetailsViewController.article = article2
         articleDetailsViewController.handleSwipeGesture(gestureRecognizer: leftSwipeGesture)
+        
+        //then
+        XCTAssertFalse(mockWebView.loadUrlCalled)
+    }
+    
+    func test_handleRightSwipeGesture_withValidCondition_shouldCallLoadArticles() {
+        //given
+        let mockWebView = MockWebView()
+        articleDetailsViewController.webView = mockWebView
+        let rightSwipeGesture = UISwipeGestureRecognizer()
+        rightSwipeGesture.direction = .right
+        let mockArticleManager = MockArticleManager()
+        articleDetailsViewController.articleManager = mockArticleManager
+        
+        //when
+        let article = Article(id: "3", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "web_url")
+        articleDetailsViewController.article = article
+        articleDetailsViewController.handleSwipeGesture(gestureRecognizer: rightSwipeGesture)
+        
+        //then
+        XCTAssertTrue(mockWebView.loadUrlCalled)
+    }
+    
+    func test_handleRightSwipeGesture_withInvalidCondition_shouldCallLoadArticles() {
+        //given
+        let mockWebView = MockWebView()
+        articleDetailsViewController.webView = mockWebView
+        let rightSwipeGesture = UISwipeGestureRecognizer()
+        rightSwipeGesture.direction = .right
+        let mockArticleManager = MockArticleManager()
+        articleDetailsViewController.articleManager = mockArticleManager
+        
+        //when
+        let article = Article(id: "1", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "web_url")
+        articleDetailsViewController.article = article
+        articleDetailsViewController.handleSwipeGesture(gestureRecognizer: rightSwipeGesture)
+        
+        //then
+        XCTAssertFalse(mockWebView.loadUrlCalled)
+        
+        //when
+        let article2 = Article(id: "5", title: "title", snippet: "snippet", date: Date(), images: [], webUrl: "web_url")
+        articleDetailsViewController.article = article2
+        articleDetailsViewController.handleSwipeGesture(gestureRecognizer: rightSwipeGesture)
         
         //then
         XCTAssertFalse(mockWebView.loadUrlCalled)

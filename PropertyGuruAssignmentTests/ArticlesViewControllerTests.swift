@@ -49,6 +49,32 @@ class ArticlesViewControllerTests: XCTestCase {
         }
     }
     
+    class MockSearchHistoryDataProvider: NSObject, SearchHistoryDataProviderType {
+        var delegate: SearchHistoryDataProviderDelegate?
+        var collectionViewCellForItemCalled = false
+        var collectionViewNumberOfItemsCalled = false
+        
+        func appendSearchHistory(_ searchString: String) {
+        }
+        
+        func getSearchHistory(at index: Int) -> String? {
+            return nil
+        }
+        
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            collectionViewNumberOfItemsCalled = true
+            return 2
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            collectionViewCellForItemCalled = true
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  "SearchHistoryCollectionViewCell", for: indexPath) as! SearchHistoryCollectionViewCell
+            cell.setupCell("mockSearchString")
+            return cell
+        }
+    }
+    
     class MockCustomActivityIndicatorView: CustomActivityIndicatorView {
         var toogleCalled = false
         override func toogle() {
@@ -58,6 +84,7 @@ class ArticlesViewControllerTests: XCTestCase {
     
     var articlesViewController: ArticlesViewController!
     var mockArticleDataProvider: MockArticleDataProvider!
+    var mockSearchHistoryDataProvider: MockSearchHistoryDataProvider!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

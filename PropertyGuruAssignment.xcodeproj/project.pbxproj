@@ -20,6 +20,7 @@
 		2623BCE82288A23500C16F67 /* ArticleDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2623BCE72288A23500C16F67 /* ArticleDataProviderTests.swift */; };
 		2644008D228B2DDC00722F85 /* ArticlesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2644008C228B2DDC00722F85 /* ArticlesViewControllerTests.swift */; };
 		264AE536228D7E9F00D3B8BB /* SearchHistoryCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264AE535228D7E9F00D3B8BB /* SearchHistoryCellTests.swift */; };
+		264AE539228D88F200D3B8BB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264AE538228D88F200D3B8BB /* WebKit.framework */; };
 		2658C20D22871BF500C30B0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2658C20C22871BF500C30B0E /* AppDelegate.swift */; };
 		2658C21222871BF500C30B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2658C21022871BF500C30B0E /* Main.storyboard */; };
 		2658C21422871BF800C30B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2658C21322871BF800C30B0E /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		2623BCE72288A23500C16F67 /* ArticleDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDataProviderTests.swift; sourceTree = "<group>"; };
 		2644008C228B2DDC00722F85 /* ArticlesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewControllerTests.swift; sourceTree = "<group>"; };
 		264AE535228D7E9F00D3B8BB /* SearchHistoryCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryCellTests.swift; sourceTree = "<group>"; };
+		264AE538228D88F200D3B8BB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2658C20922871BF500C30B0E /* PropertyGuruAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PropertyGuruAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2658C20C22871BF500C30B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2658C21122871BF500C30B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				264AE539228D88F200D3B8BB /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +146,14 @@
 			path = DataSources;
 			sourceTree = "<group>";
 		};
+		264AE537228D88F200D3B8BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				264AE538228D88F200D3B8BB /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2658C20022871BF500C30B0E = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +161,7 @@
 				2658C22022871BF900C30B0E /* PropertyGuruAssignmentTests */,
 				2658C22B22871BF900C30B0E /* PropertyGuruAssignmentUITests */,
 				2658C20A22871BF500C30B0E /* Products */,
+				264AE537228D88F200D3B8BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
